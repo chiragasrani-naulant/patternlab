@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PatternLab – Pattern Making & GC Studio</title>
+<style>
+:root{--bg:#e6e6e6;--card:#f3f3f3;--card2:#fafafa;--ink:#1c1c1c;--mut:#7b7b7b;--lime:#cdf45b;--limeink:#1c1c1c;--dark:#232323;--dt:#fff;--line:#dadada;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121212;--card:#1d1d1d;--card2:#262626;--ink:#f1f1f1;--mut:#8c8c8c;--dark:#cdf45b;--dt:#1c1c1c;--line:#333}}
+:root[data-theme="dark"]{--bg:#121212;--card:#1d1d1d;--card2:#262626;--ink:#f1f1f1;--mut:#8c8c8c;--dark:#cdf45b;--dt:#1c1c1c;--line:#333}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.app{max-width:1280px;margin:0 auto;padding:clamp(14px,3vw,32px)}*{-webkit-tap-highlight-color:transparent}button:focus-visible,textarea:focus-visible,.drop:focus-within{outline:2px solid var(--ink);outline-offset:2px}.ic{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.2em}.logo .ic{width:22px;height:22px}.brand b{display:block;font-size:17px;letter-spacing:-.02em}.brand span{font-size:11.5px;color:var(--mut)}.hh{display:flex;align-items:center;gap:10px}.bd{width:34px;height:34px;border-radius:12px;background:var(--card2);display:grid;place-items:center}.stat small{display:flex;align-items:center;gap:6px}.drop .ic{width:26px;height:26px;margin-bottom:6px}.drop small{opacity:.7}.chip:hover{background:var(--line)}.chip.on:hover{background:var(--lime)}.go:active,.chip:active{transform:scale(.97)}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.logo{width:42px;height:42px;border-radius:14px;background:var(--dark);color:var(--dt);display:grid;place-items:center;font-weight:800}
+nav{display:flex;gap:4px;background:var(--card);padding:5px;border-radius:999px;margin-left:auto}nav button{display:flex;align-items:center;gap:7px}
+nav button,.chip{border:0;font:inherit;font-size:13px;min-height:40px;padding:9px 16px;transition:background .15s,transform .1s;border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
+nav button.on{background:var(--dark);color:var(--dt)}
+h1{font-weight:400;letter-spacing:-.03em;font-size:clamp(30px,5vw,48px);line-height:1.02;margin:6px 0 4px}
+.sub{color:var(--mut);font-size:14px;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:380px minmax(0,1fr);gap:16px}.in{display:grid;grid-template-columns:1fr}.in h3{grid-column:1/-1}
+
+.card{background:var(--card);border-radius:28px;padding:20px}
+.card h3{margin:0 0 4px;font-weight:500;font-size:20px;letter-spacing:-.02em}
+.lab{font-size:12px;color:var(--mut);margin:14px 0 7px}
+textarea{width:100%;min-height:92px;border:0;border-radius:18px;background:var(--card2);color:var(--ink);padding:14px;font:inherit;font-size:14px;resize:vertical;outline:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--card2);border:1px solid transparent;padding:8px 13px;display:inline-flex;align-items:center;gap:6px}
+.chip.on{background:var(--lime);color:var(--limeink);font-weight:600}
+.drop{display:grid;place-items:center;text-align:center;border:1.5px dashed var(--line);border-radius:20px;padding:16px;color:var(--mut);font-size:13px;cursor:pointer;background:var(--card2);min-height:84px}
+.drop img{max-width:100%;max-height:150px;border-radius:12px}
+.go{width:100%;margin-top:16px;border:0;border-radius:999px;padding:15px;background:var(--dark);color:var(--dt);font:inherit;font-weight:600;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+
+.stat{border-radius:24px;padding:18px;background:var(--card)}
+.stat.d{background:var(--dark);color:var(--dt)}
+.stat small{opacity:.65;font-size:12px}.stat b{display:block;font-size:40px;font-weight:400;letter-spacing:-.04em;margin-top:8px}
+.stat span{font-size:12px;opacity:.65}
+.row{display:grid;grid-template-columns:1.2fr .55fr 1.6fr;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
+.row:last-child{border:0}.row i{font-style:normal;color:var(--mut);font-size:12px}
+.bar{height:10px;border-radius:6px;background:var(--lime);display:inline-block;vertical-align:middle;margin-right:8px}
+.tabs{display:flex;gap:6px;margin:18px 0 12px;flex-wrap:wrap}
+ol{margin:0;padding:0;list-style:none}
+.step{display:flex;gap:12px;padding:13px;border-radius:18px;background:var(--card2);margin-bottom:8px;cursor:pointer}
+.step .n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:12px;font-weight:700}
+.step.done{opacity:.5}.step.done .n{background:var(--lime);color:var(--limeink)}
+.step b{font-weight:600;font-size:14px}.step p{margin:3px 0 0;color:var(--mut);font-size:12.5px;line-height:1.45}
+.tag{display:inline-block;font-size:11px;padding:3px 9px;border-radius:999px;background:var(--lime);color:var(--limeink);margin:5px 5px 0 0;font-weight:600}
+.tag.g{background:var(--card);color:var(--ink)}
+.dr{padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.5;display:flex;gap:10px}.dr:last-child{border:0}
+.dr em{font-style:normal;color:var(--mut);font-weight:700}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.gc{border-radius:24px;background:var(--card);padding:20px;cursor:pointer;border:0;text-align:left;color:var(--ink);font:inherit}
+.gc:hover{background:var(--card2)}.gc .e{width:58px;height:58px;border-radius:18px;background:var(--lime);color:#1c1c1c;display:grid;place-items:center}.gc .e .ic{width:30px;height:30px}.gc b{display:block;font-size:18px;font-weight:500;margin-top:10px}
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px;min-width:560px}td,th{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line)}th{color:var(--mut);font-weight:500;font-size:12px}
+.prog{height:8px;border-radius:5px;background:var(--card2);overflow:hidden;margin:8px 0 14px}.prog div{height:100%;background:var(--lime);width:0;transition:.3s}
+.hide{display:none}.emp,.ld{text-align:center;padding:48px 24px}.bd.big{width:64px;height:64px;border-radius:20px;margin:0 auto 14px;background:var(--lime);color:#1c1c1c}.bd.big .ic{width:28px;height:28px}.ld ul{list-style:none;margin:6px auto 0;padding:0;max-width:300px;text-align:left}.ld li{font-size:13px;color:var(--mut);padding:6px 0 6px 26px;position:relative;opacity:.45;transition:opacity .3s}.ld li:before{content:'';position:absolute;left:3px;top:10px;width:10px;height:10px;border-radius:50%;border:1.5px solid var(--mut)}.ld li.on{opacity:1;color:var(--ink)}.ld li.on:before{border-color:var(--ink);border-top-color:transparent;animation:sp .7s linear infinite}.ld li.ok{opacity:1;color:var(--ink)}.ld li.ok:before{background:var(--lime);border-color:var(--lime)}.ld .prog{max-width:300px;margin:14px auto}.go:disabled{opacity:.6;cursor:wait}@keyframes sp{to{transform:rotate(360deg)}}.looks{display:grid;grid-template-columns:1fr 1fr;gap:12px}.looks figure,.pcx{margin:0;background:var(--card2);border-radius:20px;padding:10px;text-align:center}.lk{width:100%;max-height:360px}figcaption{font-size:12px;color:var(--mut)}.sws{display:flex;gap:9px;margin:10px 0 14px;flex-wrap:wrap}.sw{width:30px;height:30px;border-radius:50%;border:2px solid var(--card);cursor:pointer;padding:0}.sw.on{outline:2px solid var(--ink);outline-offset:2px}.pcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:12px}.pv{width:100%;max-height:300px}.pp{fill:rgba(205,244,91,.3);stroke:var(--ink);stroke-width:.09;stroke-linejoin:round}.fd,.dd{stroke:var(--mut);stroke-width:.07;stroke-dasharray:.45 .3;fill:none}.gr{stroke:var(--ink);stroke-width:.07;fill:none}.dm{stroke:var(--mut);stroke-width:.06;fill:none}.tx{font-size:.78px;fill:var(--mut)}.tl{font-size:1px;fill:var(--ink);font-weight:600}
+@media(min-width:1025px){.grid>.in{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 32px);overflow:auto}}
+@media(max-width:1024px){.grid{grid-template-columns:1fr}.in{grid-template-columns:1fr 1fr;column-gap:26px}.go{grid-column:1/-1}.row{grid-template-columns:1fr .4fr 1.4fr}}
+@media(max-width:640px){.in{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stat.d{grid-column:1/-1}.stat b{font-size:32px}.row{grid-template-columns:1fr auto;gap:2px 10px}.row i{grid-column:1/-1}.card{border-radius:22px;padding:16px}.app{padding-bottom:112px}.brand span{display:none}nav{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));margin:0;justify-content:space-around;background:var(--ink);box-shadow:0 10px 30px rgba(0,0,0,.28);z-index:20;padding:6px}nav button{flex:1;flex-direction:column;gap:3px;font-size:11px;color:var(--bg);border-radius:18px;padding:8px 4px}nav button .ic{width:20px;height:20px}nav button.on{background:var(--lime);color:#1c1c1c}.lib{grid-template-columns:1fr 1fr}.gc{padding:16px}}
+</style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-cut" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M20 4 8.3 15.7M14.5 14.5 20 20M8.3 8.3 12 12"/></symbol><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol><symbol id="i-spool" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M8 3v18M16 3v18M8 8l8 2M8 12l8 2M8 16l8 2"/></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></symbol><symbol id="i-ruler" viewBox="0 0 24 24"><path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m0 0L8 8m4-4 4 4M4 20h16"/></symbol><symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8 3 3 6l2 4 2-1v12h10V9l2 1 2-4-5-3"/><path d="M8 3l4 5 4-5M12 8v13"/></symbol><symbol id="i-tee" viewBox="0 0 24 24"><path d="M8 3 3 7l3 3 1.5-1v11h9V9l1.5 1 3-3-5-4c-1 2.200-7 2.200-8 0z"/></symbol><symbol id="i-trouser" viewBox="0 0 24 24"><path d="M7 3h10l1 18h-5l-1-11-1 11H6z"/><path d="M7 6.500h10"/></symbol><symbol id="i-kurta" viewBox="0 0 24 24"><path d="M9 3 4 6l1 4 3-1v13h8V9l3 1 1-4-5-3c-1 2-5 2-6 0z"/><path d="M12 5v6"/></symbol><symbol id="i-dress" viewBox="0 0 24 24"><path d="M9 3l1 6-4 12h12l-4-12 1-6"/><path d="M10 9h4"/></symbol><symbol id="i-skirt" viewBox="0 0 24 24"><path d="M8 4h8l3 16H5z"/><path d="M8 7.500h8"/></symbol></defs></svg><div class="app">
+<header><div class="logo"><svg class="ic"><use href="#i-cut"/></svg></div><div class="brand"><b>PatternLab</b><span>NIFT Jodhpur · Apparel Production</span></div><nav id="nav"></nav></header>
+<div id="v-studio">
+<h1>Garment Pattern<br>& Construction Studio</h1>
+<p class="sub">Describe your garment or upload a reference. Get panels, pattern drafting and the construction sequence in one place.</p>
+<div class="grid">
+<div class="card in"><h3>Your garment</h3>
+<div class="f"><div class="lab">Describe (e.g. "half sleeve shirt with mandarin collar and pocket")</div><textarea id="txt" placeholder="Full sleeve formal shirt, spread collar, 1 pocket..."></textarea></div>
+<div class="f"><div class="lab">Reference image</div><label class="drop" id="drop"><input type="file" id="file" accept="image/*" hidden><span><svg class="ic"><use href="#i-upload"/></svg><br>Upload reference photo<br><small>JPG or PNG</small></span></label></div>
+<div class="f"><div class="lab">Garment</div><div class="chips" id="c-g"></div></div>
+<div class="f"><div class="lab">Sleeve</div><div class="chips" id="c-s"></div></div>
+<div class="f" id="colw"><div class="lab">Collar</div><div class="chips" id="c-c"></div></div>
+<div class="f"><div class="lab">Size (chest)</div><div class="chips" id="c-z"></div></div>
+<div class="f"><div class="lab">Fit</div><div class="chips" id="c-f"></div></div>
+<div class="f"><div class="lab">Extras</div><div class="chips" id="c-p"></div></div>
+<button class="go" id="go">Analyse & generate →</button></div>
+<div id="out"></div></div></div>
+<div id="v-lib" class="hide"><h1>Garment library</h1><p class="sub">Tap any garment to open it in the Studio.</p><div class="lib" id="lib"></div></div>
+<div id="v-st" class="hide"><h1>Stitch & machine guide</h1><p class="sub">The ISO 4915 stitch classes you will meet most often in garment construction.</p><div class="card scroll"><table id="stt"></table></div></div>
+</div>
+<script>
+const q=x=>Math.round(x*4)/4;const ico=k=>`<svg class="ic"><use href="#i-${k}"/></svg>`;
+const SZ={S:36,M:38,L:40,XL:42};
+const GN={shirt:['Shirt','👔'],tee:['T-shirt','👕'],trouser:['Trouser','👖'],kurta:['Kurta','🥻'],dress:['A-line dress','👗'],skirt:['Skirt','🩱']};
+const ST=[['301','Lock stitch','SNLS (single needle)','Seams, topstitch, hems on woven','12–14 SPI'],['401','Double chain stitch','Chain-stitch / FOA machine','Jeans side seams, waistband, stretch seams','10–12 SPI'],['504','3-thread overlock','Overlock','Edge finishing, knit seams','—'],['514','4-thread safety stitch','Overlock (4T)','Seam + finish in one pass, tees, kurta sides','—'],['406/407','Bottom-cover (twin needle)','Twin needle / cover-stitch','Flat-fell, hems on knits','—'],['605/606','Flatlock / cover','Flatlock machine','Sportswear, flat seams','—'],['304','Zigzag lockstitch','Zigzag / bartack','Bartack, decorative, stretch hem','—'],['101/107','Single-thread chain','Button sewing machine','Sewing buttons','—'],['Keyhole','Buttonhole (lockstitch)','Buttonhole machine','Shirt/kurta plackets, waistbands','—'],['103','Blind hem','Blind-stitch machine','Invisible hems on trousers, skirts','—']];
+const S={g:'shirt',sleeve:'full',collar:'spread',size:'M',fit:'regular',pocket:true,img:null,col:'#8fb7d9',ready:false,busy:false,touched:false,done:{}};
+function sec(op,m,st,n){return {op,m,st,n}}
+function build(s){
+const C=SZ[s.size],W=C-6,E=s.fit==='slim'?-1:s.fit==='relaxed'?1.5:0,g=s.g,sl=s.sleeve,co=s.collar,P=[],D=[],G=[],T=[];let fab=0,pc=s.pocket;
+const sz=Object.keys(SZ).indexOf(s.size)*.15;
+if(g==='shirt'){
+const cw=q(C/4+1.25+E/4),ah=q(C/6+3),nw=q(C/12+.25);
+P.push(['Front (L & R)',2,'Mirror pair, +1.5″ buttonstand, grain ∥ CF'],['Back',1,'Cut on fold, 1.5″ box pleat at CB'],['Yoke',2,'Outer + inner, grain across']);
+if(sl!=='none')P.push(['Sleeve',2,'Mirror pair, grain ∥ sleeve centre']);else P.push(['Armhole facing',2,'Bias strip, interfaced']);
+if(sl==='full')P.push(['Cuff',4,'2 outer + 2 interfaced inner'],['Sleeve placket',2,'Tower placket strip']);
+if(co==='spread')P.push(['Collar',2,'Upper + under, interfaced'],['Collar stand',2,'Outer + inner']);
+if(co==='mandarin')P.push(['Collar band',2,'Outer + interfaced inner']);
+if(co==='camp')P.push(['Camp collar',2,'Upper + under, one-piece']);
+if(pc)P.push(['Patch pocket',1,'Left chest, 5″ × 5.5″']);
+D.push(`Block: width ${cw}″ (C/4 + 1.25″ ease) × length ${q(C-9)}″. Mark chest line ${ah}″ down (C/6 + 3″).`,`Neck: width ${nw}″ (C/12), front depth ${q(nw+.75)}″, back depth 0.75″. Use a French curve.`,`Shoulder: length ${q(C/7)}″, slope 1.5″ front / 1.25″ back.`,`Armhole: shoulder point to underarm, ~1″ scoop at mid. Front deeper, back flatter.`,`Front: add 1.5″ buttonstand at CF. Back: 1.5″ box pleat at CB, split yoke 3″ below back neck.`,`Sleeve: length ${sl==='half'?10:sl==='none'?0:24.5}″, bicep ${q(C/3+2.5)}″, cap height ${q(C/6)}″${sl==='full'?', wrist 11″ with 3 pleats':''}.`,`Collar: stand = neck curve + 0.75″ overlap, stand height 1.25″, fall 1.75″. Add 0.5″ SA, 1″ hem.`);
+T.push(sec('Fuse interfacing on collar, stand, cuffs, placket','Fusing press','—','130–150°C, 12–15 sec'));
+if(pc)T.push(sec('Hem pocket top, press edges, attach on left front','SNLS','301, 12 SPI','Topstitch 1/16″ from edge'));
+T.push(sec('Fold & press front buttonstand','Iron / SNLS','301','1.5″ fold twice, topstitch'),sec('Attach yoke to back (sandwich method)','SNLS','301, 12 SPI','Back pleat first, then yoke'),sec('Join front shoulders into yoke','SNLS','301','Topstitch yoke 1/4″'));
+if(co!=='camp'||1)T.push(sec('Make collar: sew, trim, turn, topstitch','SNLS','301, 14 SPI','Trim corners, clip curves'),sec('Attach collar to stand and to neckline','SNLS','301, 14 SPI','Match CB & shoulder notches'));
+if(sl==='full')T.push(sec('Sew sleeve plackets','SNLS','301','Slash opening, bind both sides'));
+if(sl!=='none')T.push(sec('Set sleeves (flat) to armhole','SNLS + Overlock','301 / 504','Ease cap evenly'));else T.push(sec('Finish armholes with facing/binding','SNLS','301','Turn & understitch'));
+T.push(sec('Close side seams & underarm in one go','Overlock / Twin needle','514 or flat-fell 406','Match underarm seam'));
+if(sl==='full')T.push(sec('Attach cuffs','SNLS','301','Pleat sleeve to cuff width'));else if(sl==='half')T.push(sec('Hem sleeves','SNLS','301','1/4″ + 1/4″ rolled hem'));
+T.push(sec('Hem body with curved shirt-tail','SNLS','301','1/4″ + 1/4″ narrow hem'),sec('Make buttonholes & attach buttons','Buttonhole + button machine','Keyhole / 101','Vertical on placket, horizontal on collar'),sec('Trim threads, final press, QC','Iron','—','Check measurements & symmetry'));
+fab=2.0+sz-(sl==='half'?.35:sl==='none'?.6:0);
+}
+if(g==='tee'){
+P.push(['Front',1,'Cut on fold'],['Back',1,'Cut on fold, higher neck']);if(sl!=='none')P.push(['Sleeve',2,'Mirror pair']);P.push(['Neck rib',1,'Ribbing, 85% of neck circumference']);
+D.push(`Block: width ${q(C/4+1.5+E/4)}″ (knit needs less ease), length ${q(C-11)}″.`,`Neck: width ${q(C/12+.5)}″, front depth 3.5″, back 1″.`,`Shoulder: length ${q(C/7)}″, slope 1.25″. Armhole depth ${q(C/6+2.5)}″.`,`Sleeve: ${sl==='full'?24:sl==='half'?8:0}″ long, bicep ${q(C/3+1.5)}″, cap height ${q(C/7)}″.`,`Neck rib: ${q(C*.55)}″ × 1″ (cut), stretch to fit. Add 0.375″ SA, 1″ hem.`);
+T.push(sec('Join one shoulder, attach neck rib','Overlock','514','Stretch rib evenly'),sec('Join second shoulder','Overlock','514','Match rib seam'),sec('Topstitch neckline','Twin needle','406','Optional, keeps rib flat'),sec('Set sleeves in flat','Overlock','514','Match notches'),sec('Close side & underarm','Overlock','514','Continuous seam'),sec('Hem body & sleeves','Twin needle / cover-stitch','406','1″ hem'),sec('Trim, press, QC','Iron','—','Check neck recovery'));
+fab=1.2+sz-(sl==='half'?.15:0);
+}
+if(g==='trouser'){
+P.push(['Front',2,'Mirror pair'],['Back',2,'Mirror pair, with dart'],['Waistband',2,'1 outer + 1 interfaced'],['Fly facing',1,'Interfaced'],['Fly extension',1,'Interfaced'],['Front pocket bag',4,'2 facing + 2 bag'],['Belt loops',5,'1.5″ × 3″']);if(pc)P.push(['Back welt',2,'Jetted pocket with 2 welts']);
+D.push(`Waist ${W}″, hip ${q(C+2)}″. Crease line = ½ front hip width. Rise ${q(W/4+3.5)}″ (W/4 + 3.5″).`,`Front: width at hip ${q(C/4+E/4+1)}″, crotch extension ${q(C/16)}″, knee ${q(9.5)}″, hem 8.5″.`,`Back: crotch extension ${q(C/8)}″, 1.5″ extra at CB waist, 1 dart ${q(1.25)}″.`,`Inseam ${q(31)}″, outseam ${q(41)}″. Front pocket slant 6.5″ down side seam.`,`Add 0.75″ SA on outseam/inseam, 1″ at back crotch, 1.5″ hem.`);
+T.push(sec('Fuse waistband, fly pieces','Fusing press','—','Interfacing 130°C'),sec('Overlock all panel edges','Overlock','504','Before assembly'),sec('Make front pockets, attach to fronts','SNLS','301','Topstitch pocket opening'),sec('Back darts, then jetted pockets','SNLS','301','Press darts toward CB'),sec('Fly (J-stitch), CF crotch to zip stop','SNLS','301 + 304','Zip insert then J-stitch'),sec('Join side seams','SNLS','301','Press open'),sec('Join inseam & crotch','SNLS','301 / 401','Double stitch crotch curve'),sec('Attach waistband','SNLS','301','Stitch-in-ditch'),sec('Hem (blind) & belt loops, button, bartack','Blind stitch / Bartack','103 / 304','Bartack at fly end & loops'),sec('Press & QC','Iron','—','Crease sharp'));
+fab=1.45+sz;
+}
+if(g==='kurta'){
+P.push(['Front',1,'Cut on fold, neck slit'],['Back',1,'Cut on fold']);if(sl!=='none')P.push(['Sleeve',2,'Mirror pair']);P.push(['Front placket (patti)',2,'Interfaced strip'],['Side slit facing',2,'Small facing']);if(co==='mandarin')P.push(['Collar band',2,'Outer + interfaced']);else P.push(['Neck facing',2,'Front + back']);
+D.push(`Chest width ${q(C/4+3+E/4)}″ (kurtas need generous ease), length ${q(C+2)}″.`,`Armhole ${q(C/6+3.5)}″, neck width ${q(C/12+.5)}″, front slit 7″ with 1.5″ patti.`,`Shoulder ${q(C/7)}″. Side slit 8″ from hem, hem sweep ${q(C/4+5)}″.`,`Sleeve ${sl==='full'?23:sl==='half'?10:0}″ with bicep ${q(C/3+3)}″.`,`Add 0.5″ SA, 1.5″ hem allowance.`);
+T.push(sec('Fuse patti & collar','Fusing press','—','Medium heat'),sec('Attach patti to neck slit','SNLS','301','Slash & turn'),sec('Join shoulders','SNLS + Overlock','301 / 504','Finish edges'),co==='mandarin'?sec('Attach mandarin collar','SNLS','301, 14 SPI','Enclose seam'):sec('Attach neck facing','SNLS','301','Understitch'),sec('Set sleeves','SNLS','301','Ease cap'),sec('Close sides up to slit','SNLS + Overlock','301 / 514','Backstitch at slit'),sec('Hem slits & body','SNLS','301','1/4″ + 1″ hem'),sec('Buttons/loops, press, QC','Button machine','101','Check symmetry'));
+fab=2.4+sz;
+}
+if(g==='dress'){
+P.push(['Front bodice+skirt',1,'Cut on fold'],['Back',2,'Mirror, CB zip'],['Neck facing',2,'Front + back'],['Armhole facing',2,'Bias facing']);if(sl!=='none')P.push(['Sleeve',2,'Mirror pair']);
+D.push(`Bust ${C}″ → front width ${q(C/4+1.5+E/4)}″, waist ${W}″, hip ${q(C+2)}″.`,`Dart: bust dart 2.25″ wide, waist dart 1.25″. Dress length 38″.`,`A-line flare: 3.5″ added each side seam at hem.`,`Neck ${q(C/12)}″, shoulder ${q(C/7)}″, armhole ${q(C/6+2.5)}″.`,`CB zip 20″. Add 0.625″ SA, 1.5″ hem.`);
+T.push(sec('Fuse facings','Fusing press','—','Light interfacing'),sec('Sew darts','SNLS','301','Press toward CF'),sec('Join shoulders & side seams','SNLS','301','Finish with overlock'),sec('Insert CB invisible zip','Zipper foot','301','Zip tape flush to edge'),sec('Attach facings (neck + armhole)','SNLS','301','Understitch'),sec('Hem by hand/blind stitch','Blind stitch','103','1.5″ hem'),sec('Press & QC','Iron','—','Check zip & hem'));
+fab=2.2+sz;
+}
+if(g==='skirt'){
+P.push(['Front',1,'Cut on fold'],['Back',2,'Mirror, CB zip'],['Waistband',1,'Interfaced, cut 2']);
+D.push(`Waist ${W}″, hip ${q(C+2)}″, hip depth 8″, length 22″.`,`Quarter hip ${q((C+2)/4+.5)}″; front dart 0.75″, back dart 1″.`,`A-line flare 2″ each side at hem. Add 0.625″ SA, 1.5″ hem.`);
+T.push(sec('Fuse waistband','Fusing press','—','Medium heat'),sec('Sew darts','SNLS','301','Press toward CF'),sec('Join sides & finish edges','SNLS + Overlock','301 / 504','—'),sec('Zip in CB seam','Zipper foot','301','Lapped or invisible'),sec('Attach waistband','SNLS','301','Hook & eye'),sec('Hem','Blind stitch','103','1.5″'),sec('Press & QC','Iron','—','Check hang'));
+fab=.9+sz;
+}
+return {P,D,T,fab:fab.toFixed(2),C,pieces:P.reduce((a,p)=>a+p[1],0)};
+}
+const FC=['#8fb7d9','#e8e2d0','#2f3e5c','#b5473a','#3d6b57','#cdf45b','#ececec'],fx=n=>+n.toFixed(2),rc=(w,h)=>`M0 0H${w}V${h}H0Z`;
+function pc(n,qty,w,h,d,o={}){const t=o.tr||0,x=w/2,y=o.ly||h*.45;return `<figure class='pcx'><svg viewBox='-2.6 -2.4 ${w+5.2} ${h+5}' class='pv'><g transform='translate(${t} 0)'><path class='pp' d='${d}'/>${o.fold||o.cf?`<path class='fd' d='M0 0V${h}'/>`:''}${o.fold?`<text class='tx' transform='translate(-.6 ${h/2}) rotate(-90)' text-anchor='middle'>FOLD</text>`:''}</g>${o.ng?'':`<path class='gr' d='M${x} ${h*.58}V${h*.88}M${x-.35} ${h*.58+.7}L${x} ${h*.58}L${x+.35} ${h*.58+.7}M${x-.35} ${h*.88-.7}L${x} ${h*.88}L${x+.35} ${h*.88-.7}'/>`}${o.ex||''}<text class='tl' x='${x}' y='${y}' text-anchor='middle'>${n}</text><text class='tx' x='${x}' y='${y+1.2}' text-anchor='middle'>cut ×${qty}${o.fold?' · fold':''}</text><path class='dm' d='M0 ${h+1.2}H${w}M0 ${h+.8}v.8M${w} ${h+.8}v.8M${w+1.3} 0V${h}M${w+.9} 0h.8M${w+.9} ${h}h.8'/><text class='tx' x='${x}' y='${h+2.3}' text-anchor='middle'>${fx(w)}″</text><text class='tx' transform='translate(${w+2.4} ${h/2}) rotate(90)' text-anchor='middle'>${fx(h)}″</text></svg></figure>`}
+function bodyD(cw,len,ah,nw,nd,sh,sl,bk,fl,ex){const sx=nw+sh,hx=cw+fl;return `M${-ex} ${nd}H0Q${nw} ${nd} ${nw} 0L${sx} ${sl}Q${sx-(bk?.4:1)} ${ah-2} ${cw} ${ah}L${hx} ${len-1.2}Q${hx*.6} ${len+.3} 0 ${len}H${-ex}Z`}
+function slvD(bw,ch,L,ww){const m=bw/2;return `M0 ${ch}C${bw*.1} ${ch*.4} ${bw*.3} 0 ${m} 0C${bw*.7} 0 ${bw*.9} ${ch*.4} ${bw} ${ch}L${m+ww/2} ${L}H${m-ww/2}Z`}
+function pieces(s){const C=SZ[s.size],W=C-6,E=s.fit==='slim'?-1:s.fit==='relaxed'?1.5:0,g=s.g,sl=s.sleeve,o=[];
+if(g==='trouser'){const hw=q(C/4+E/4+1),rise=q(W/4+3.5),L=41;[0,1].forEach(b=>{const h=hw+b,c=b?q(C/8):q(C/16),x=(h+c)/2;o.push(pc(b?'Back leg':'Front leg',2,h+c,L,`M0 0H${h-1.2}L${h} ${rise-3}Q${h} ${rise} ${h+c} ${rise}L${x+4.25} ${L}H${x-4.25}L0 ${rise*.5}Z`,{ex:`<path class='fd' d='M${x} 0V${L}'/>`}))});o.push(pc('Waistband',2,W+1.5,1.75,rc(W+1.5,1.75),{ng:1}));return o.join('')}
+if(g==='skirt'){const wq=q((W+2)/4),hq=q((C+2)/4+.5),d=`M0 0H${wq}L${hq} 8L${hq+2} 22H0Z`;return pc('Front',1,hq+2,22,d,{fold:1})+pc('Back',2,hq+2,22,d,{cf:1})+pc('Waistband',2,W+1.5,1.75,rc(W+1.5,1.75),{ng:1})}
+const nw=q(C/12+(g==='tee'?.5:g==='dress'?0:.25)),sh=q(C/7),[cw,len,ah,nd,fl,ex]={shirt:[q(C/4+1.25+E/4),C-9,q(C/6+3),q(nw+.75),0,1.5],tee:[q(C/4+1.5+E/4),C-11,q(C/6+2.5),3.5,0,0],kurta:[q(C/4+3+E/4),C+2,q(C/6+3.5),3,2,0],dress:[q(C/4+1.5+E/4),38,q(C/6+2.5),q(nw+.75),3.5,0]}[g],bw=q(C/3+(g==='tee'?1.5:g==='kurta'?3:2.5)),SL=sl==='half'?(g==='tee'?8:10):(g==='kurta'?23:24.5),nl=q(C*.42);
+o.push(pc('Front',g==='shirt'?2:1,cw+fl+ex,len,bodyD(cw,len,ah,nw,nd,sh,1.5,0,fl,ex),{tr:ex,fold:g!=='shirt',cf:g==='shirt'}));
+o.push(pc('Back',g==='dress'?2:1,cw+fl,len,bodyD(cw,len,ah,nw,.75,sh,1.25,1,fl,0),{fold:g!=='dress',cf:g==='dress',ex:g==='shirt'?`<path class='dd' d='M0 3H${cw}'/><text class='tx' x='${cw/2}' y='2.4' text-anchor='middle'>yoke split</text>`:''}));
+if(g==='shirt')o.push(pc('Yoke',2,cw,3.2,`M0 .75Q${nw} .75 ${nw} 0L${nw+sh} 1.25L${nw+sh+.6} 3.2H0Z`,{fold:1,ng:1}));
+if(sl!=='none')o.push(pc('Sleeve',2,bw,SL,slvD(bw,q(C/6),SL,sl==='full'?(g==='kurta'?bw-5:10.5):bw-1.5)));
+if(g==='shirt'&&sl==='full')o.push(pc('Cuff',4,10.5,2.75,rc(10.5,2.75),{ng:1,ly:1.1,ex:`<path class='fd' d='M0 1.375H10.5'/>`}));
+const co=s.collar;if((g==='shirt'||g==='kurta')&&co==='mandarin')o.push(pc('Collar band',2,nl,1.8,`M0 .3Q${nl/2} 0 ${nl} .3V1.5Q${nl/2} 1.8 0 1.5Z`,{ng:1,ly:.8}));
+if(g==='shirt'&&(co==='spread'||co==='camp')){o.push(pc('Collar',2,nl+.8,2.5,`M0 0Q${nl/2+.4} .5 ${nl+.8} 0L${nl+.8} 2.4Q${nl/2+.4} 1.9 0 2.4Z`.replace('L'+(nl+.8)+' 2.4','L'+(nl+.8)+' 2.4'),{ng:1,ly:1}));if(co==='spread')o.push(pc('Collar stand',2,nl,1.8,`M0 .3Q${nl/2} 0 ${nl} .3V1.5Q${nl/2} 1.8 0 1.5Z`,{ng:1,ly:.8}))}
+if(g==='shirt'&&s.pocket)o.push(pc('Pocket',1,5,5.6,'M0 0H5V4.8L2.5 5.6L0 4.8Z',{ng:1}));
+if(g==='tee')o.push(pc('Neck rib',1,q(C*.55),1.1,rc(q(C*.55),1.1),{ng:1,ly:.5}));
+return o.join('')}
+function look(s,bk){const g=s.g,sl=s.sleeve,c=s.col,co=s.collar,K=`fill='none' stroke='#222' stroke-width='1.2' stroke-dasharray='3 2'`,F=`fill='${c}' stroke='#222' stroke-width='1.6' stroke-linejoin='round'`;let h='';
+if(g==='trouser')h=`<path ${F} d='M62 38H138L148 236H104L100 112L96 236H52Z'/><rect ${F} x='62' y='30' width='76' height='10' rx='2'/>`+(bk?`<path ${K} d='M70 54h20v14H70zM110 54h20v14h-20zM80 40l2 12M120 40l-2 12'/>`:`<path ${K} d='M62 46Q78 50 80 68M138 46Q122 50 120 68M100 40V76Q100 84 93 84'/><circle cx='100' cy='35' r='2' fill='#fff' stroke='#222'/>`);
+else if(g==='skirt')h=`<path ${F} d='M68 46H132L160 206H40Z'/><rect ${F} x='68' y='38' width='64' height='9' rx='2'/>`+(bk?`<path ${K} d='M100 47V92'/>`:`<path ${K} d='M84 47l2 16M116 47l-2 16'/>`);
+else{const L={shirt:172,tee:158,kurta:214,dress:226}[g],hm=g==='dress'?[44,156]:g==='kurta'?[56,144]:[66,134],wst=g==='dress',sp=p=>`<path ${F} d='M${p.map(a=>a.join(' ')).join('L')}Z'/>`,mr=p=>p.map(a=>[200-a[0],a[1]]);
+if(sl!=='none'){const a=sl==='full'?[[62,36],[32,150],[48,156],[68,92]]:[[62,36],[40,86],[58,92],[68,92]];h+=sp(a)+sp(mr(a))}
+h+=`<path ${F} d='M86 28Q100 ${bk?34:g==='tee'?50:52} 114 28L138 36L132 92${wst?'L128 112':''}L${hm[1]} ${L}Q100 ${L+6} ${hm[0]} ${L}${wst?'L72 112':''}L68 92L62 36Z'/>`;
+const man=(g==='shirt'||g==='kurta')&&co==='mandarin',lf=g==='shirt'&&!bk&&(co==='spread'||co==='camp'),bB=g==='shirt'&&bk&&co!=='none';
+if(!man&&!lf&&!bB)h+=`<path d='M86 28Q100 ${bk?34:g==='tee'?50:52} 114 28' fill='none' stroke='#222' stroke-width='3'/>`;
+if(man||bB)h+=`<path ${F} d='M86 28V21Q100 26 114 21V28Q100 ${bk?32:38} 86 28Z'/>`;
+if(lf)h+=co==='spread'?`<path ${F} d='M86 25L72 38L90 56L100 48Z'/><path ${F} d='M114 25L128 38L110 56L100 48Z'/>`:`<path ${F} d='M86 25L70 40L92 70L100 54Z'/><path ${F} d='M114 25L130 40L108 70L100 54Z'/>`;
+if(!bk&&(g==='shirt'||g==='kurta')){const e=g==='shirt'?L:118;h+=`<path ${K} d='M95 56V${e}M105 56V${e}'/>`;for(let y=64;y<e-6;y+=20)h+=`<circle cx='100' cy='${y}' r='2.2' fill='#fff' stroke='#222'/>`}
+if(!bk&&g==='shirt'&&s.pocket)h+=`<path ${F} d='M108 70H124V84L116 90L108 84Z'/>`;
+if(bk&&g==='shirt')h+=`<path ${K} d='M65 50Q100 56 135 50M100 56V80'/>`;
+if(bk&&g==='dress')h+=`<path ${K} d='M100 33V112'/>`;
+if(!bk&&g==='dress')h+=`<path ${K} d='M80 96L88 112M120 96L112 112'/>`;
+if(g==='shirt'&&sl==='full')h+=`<path ${K} d='M34 140L51 146M166 140L149 146'/>`}
+return `<svg viewBox='0 0 200 250' class='lk'>${h}</svg>`}
+function empty(h){return `<div class='card emp'><div class='bd big'>${ico('cut')}</div><h3>${h?'Add something first':'Tell us about your garment'}</h3><p class='sub'>Describe it or upload a reference photo, then press Analyse. Your panels, pattern drawings and construction steps will appear here.</p></div>`}
+function loader(cb){const o=document.getElementById('out'),st=['Reading your input','Detecting garment type & details',S.img?'Scanning reference image':'Matching design features','Calculating panels & measurements','Drawing pattern pieces','Sequencing construction steps'];o.innerHTML=`<div class='card ld'><h3>Analysing your garment…</h3><div class='prog'><div id='lp'></div></div><ul>${st.map((x,i)=>`<li id='l${i}'>${x}</li>`).join('')}</ul></div>`;st.forEach((x,i)=>setTimeout(()=>{const e=document.getElementById('l'+i),p=document.getElementById('lp');if(!e||!p)return;e.className='on';if(i)document.getElementById('l'+(i-1)).className='ok';p.style.width=(i+1)/st.length*100+'%'},i*650));setTimeout(()=>{const e=document.getElementById('l'+(st.length-1));if(e)e.className='ok';setTimeout(cb,350)},st.length*650)}
+function chips(id,list,key,fn){document.getElementById(id).innerHTML=list.map(([v,l])=>`<button class="chip ${S[key]===v?'on':''}" onclick="setS('${key}','${v}')">${l}</button>`).join('')}
+function ctl(){
+chips('c-g',Object.entries(GN).map(([k,v])=>[k,ico(k)+v[0]]),'g');
+chips('c-s',[['full','Full'],['half','Half'],['none','Sleeveless']],'sleeve');
+chips('c-c',[['spread','Spread'],['mandarin','Mandarin'],['camp','Camp'],['none','None']],'collar');
+document.getElementById('colw').style.display=(S.g==='shirt'||S.g==='kurta')?'':'none';
+chips('c-z',Object.keys(SZ).map(k=>[k,k+' · '+SZ[k]+'″']),'size');
+chips('c-f',[['slim','Slim'],['regular','Regular'],['relaxed','Relaxed']],'fit');
+document.getElementById('c-p').innerHTML=`<button class="chip ${S.pocket?'on':''}" onclick="S.pocket=!S.pocket;ctl();render()">Pocket</button>`;
+}
+function setS(k,v){S[k]=v;S.touched=true;if(k==='g'){S.done={};if(v==='tee'&&S.sleeve==='full')S.sleeve='half';}ctl();render()}
+function detect(t){t=t.toLowerCase();
+if(/kurta|kurti|kameez/.test(t))S.g='kurta';else if(/t-?shirt|tee\b|polo/.test(t))S.g='tee';else if(/shirt/.test(t))S.g='shirt';else if(/trouser|pant|jeans|chino/.test(t))S.g='trouser';else if(/skirt|lehenga/.test(t))S.g='skirt';else if(/dress|frock|gown/.test(t))S.g='dress';
+if(/sleeveless|bina bah|bina sleeve|tank|halter/.test(t))S.sleeve='none';else if(/half|short|aadhi|adhi|chhot/.test(t))S.sleeve='half';else if(/full|long|poori|lambi|lamb/.test(t))S.sleeve='full';
+if(/mandarin|band|nehru|chinese/.test(t))S.collar='mandarin';else if(/camp|cuban|resort/.test(t))S.collar='camp';else if(/no collar|collarless/.test(t))S.collar='none';else if(/collar|spread|formal/.test(t))S.collar='spread';
+if(/no pocket|bina pocket/.test(t))S.pocket=false;else if(/pocket/.test(t))S.pocket=true;
+if(/slim/.test(t))S.fit='slim';if(/relax|loose|oversize/.test(t))S.fit='relaxed';S.done={};}
+function render(){
+if(!S.ready){document.getElementById('out').innerHTML=empty();return}
+const r=build(S),g=GN[S.g],n=r.T.length,d=Object.keys(S.done).length,mx=Math.max(...r.P.map(p=>p[1]));
+document.getElementById('out').innerHTML=`
+<div class="stats"><div class="stat d"><small>${ico('layers')} Total pieces to cut</small><b>${r.pieces}</b><span>${r.P.length} unique panels · ${g[0]}</span></div>
+<div class="stat"><small>${ico('ruler')} Fabric (44″ width)</small><b>${r.fab} m</b><span>approx, size ${S.size}, no pattern match</span></div>
+<div class="stat"><small>${ico('spool')} Sewing operations</small><b>${n}</b><span>${S.img?'Reference attached':'Add reference to compare'}</span></div></div>
+<div class="card" style="margin-bottom:12px"><h3 class="hh"><span class="bd">${ico(S.g)}</span>Final look</h3><p class="sub" style="margin:2px 0 0">This is how the finished ${g[0]} will look. Pick a fabric colour:</p><div class="sws">${FC.map(x=>`<button class='sw ${S.col===x?'on':''}' style='background:${x}' data-c='${x}' onclick='S.col=this.dataset.c;render()' aria-label='colour'></button>`).join('')}</div><div class="looks"><figure>${look(S,0)}<figcaption>Front</figcaption></figure><figure>${look(S,1)}<figcaption>Back</figcaption></figure></div></div>
+<div class="card" style="margin-bottom:12px"><h3 class="hh"><span class="bd">${ico('ruler')}</span>Pattern pieces (drawn to size)</h3><p class="sub" style="margin:2px 0 0">Dashed line = fold or CF, arrow = grainline, all measurements in inches.</p><div class="pcg">${pieces(S)}</div></div>
+<div class="card" style="margin-bottom:12px"><h3 class="hh"><span class="bd">${ico('layers')}</span>Panels & cutting list</h3>
+${S.img?`<div style="margin:8px 0"><img src="${S.img}" style="height:70px;border-radius:12px"> <span class="tag g">Check panels against your reference</span></div>`:''}
+${r.P.map(p=>`<div class="row"><div><b>${p[0]}</b></div><div><span class="bar" style="width:${p[1]/mx*40}px"></span>×${p[1]}</div><i>${p[2]}</i></div>`).join('')}</div>
+<div class="card" style="margin-bottom:12px"><h3 class="hh"><span class="bd">${ico('ruler')}</span>Pattern drafting (PM)</h3><p class="sub" style="margin:2px 0 8px">Base size ${S.size} · chest ${r.C}″ · ${S.fit} fit</p>
+${r.D.map((x,i)=>`<div class="dr"><em>${i+1}</em><span>${x}</span></div>`).join('')}</div>
+<div class="card"><h3 class="hh"><span class="bd">${ico('spool')}</span>Garment construction (GC) sequence</h3><p class="sub" style="margin:2px 0 0">Tap step to mark done</p>
+<div class="prog"><div style="width:${d/n*100}%"></div></div>
+<ol>${r.T.map((s,i)=>`<li class="step ${S.done[i]?'done':''}" onclick="S.done[${i}]?delete S.done[${i}]:S.done[${i}]=1;render()"><div class="n">${S.done[i]?'✓':i+1}</div><div><b>${s.op}</b><p>${s.n}</p><span class="tag">${s.m}</span>${s.st!=='—'?`<span class="tag g">Stitch ${s.st}</span>`:''}</div></li>`).join('')}</ol></div>`;
+}
+function view(v){['studio','lib','st'].forEach(k=>document.getElementById('v-'+k).classList.toggle('hide',k!==v));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v))}
+document.getElementById('nav').innerHTML=[['studio','Studio','cut'],['lib','Library','grid'],['st','Stitches','spool']].map(([k,l,i])=>`<button data-v="${k}" onclick="view('${k}')">${ico(i)}${l}</button>`).join('');
+document.getElementById('lib').innerHTML=Object.entries(GN).map(([k,v])=>{const r=build({...S,g:k,sleeve:k==='tee'?'half':'full',pocket:true});return `<button class="gc" onclick="S.g='${k}';S.done={};S.touched=true;ctl();render();view('studio')"><div class="e">${ico(k)}</div><b>${v[0]}</b><span class="sub">${r.P.length} panels · ${r.T.length} steps</span></button>`}).join('');
+document.getElementById('stt').innerHTML='<tr><th>ISO</th><th>Stitch</th><th>Machine</th><th>Used for</th><th>Density</th></tr>'+ST.map(r=>'<tr>'+r.map(c=>`<td>${c}</td>`).join('')+'</tr>').join('');
+document.getElementById('go').onclick=()=>{if(S.busy)return;const t=document.getElementById('txt').value;if(!t.trim()&&!S.img&&!S.touched){S.ready=false;document.getElementById('out').innerHTML=empty(1);return}if(t.trim())detect(t);ctl();S.busy=true;S.ready=false;const b=document.getElementById('go');b.disabled=true;b.textContent='Analysing…';document.getElementById('out').scrollIntoView({behavior:'smooth'});loader(()=>{S.busy=false;S.ready=true;b.disabled=false;b.textContent='Analyse & generate →';render();document.getElementById('out').scrollIntoView({behavior:'smooth'})})};
+document.getElementById('file').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{S.img=rd.result;document.getElementById('drop').innerHTML=`<img src="${S.img}">`;render()};rd.readAsDataURL(f)};
+view('studio');ctl();render();
+</script></body></html>
